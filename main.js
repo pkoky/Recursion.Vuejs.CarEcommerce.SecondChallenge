@@ -155,4 +155,20 @@ class CarDB {
   ]
 }
 
-console.log(CarDB.table[1])
+
+class Controller {
+  static arr = [];
+
+  static pushCarObject(obj) {
+    Controller.arr.push(obj);
+  }
+
+  static createCarObject(currCarData) {
+    let obj = new Car(currCarData.CarModel, currCarData.Category, currCarData.Price, currCarData.ImgURL, currCarData.Date);
+    return obj;
+  }
+}
+
+// CarDBを元にCarObjectを生成しarrに追加する
+CarDB.table.forEach(carData => Controller.pushCarObject(Controller.createCarObject(carData)));
+console.log(Controller.arr);
