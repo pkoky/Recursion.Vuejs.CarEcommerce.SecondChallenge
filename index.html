@@ -21,22 +21,14 @@
     <body>
 
         <div id="carApp" class='container mt-5'>
-            
+            {{ }}
             <div class="d-flex">
                 <div class="mx-2">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Category</option>
-                        <option value="1">Telsa</option>
-                        <option value="2">Porsche</option>
-                        <option value="3">Toyota</option>
-                        <option value="4">Honda</option>
-                        <option value="5">Mazda</option>
-                        <option value="6">Mercedes-Benz</option>
-                        <option value="7">Lexus</option>
-                        <option value="8">Lamborghini</option>
-                        <option value="9">Audi</option>
-                        <option value="10">BMW</option>
+                    <select v-model="category" v-on:change="regenerationCarItems" class="form-select" aria-label="Default select example">
+                        <option selected>All Categories</option>
+                        <option v-for="category in getAllCategories">{{ category }}</option>
                     </select>
+                    {{ category }}
                 </div>
                 
 
