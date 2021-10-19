@@ -1,8 +1,8 @@
 # Recursion-Vue.js-CarEcommerce
 
-コンピューターサイエンス学習プラットフォーム**Recurstion**の Vue.js の課題です。
+コンピューターサイエンス学習プラットフォーム[**Recursion**](https://recursionist.io/dashboard/users/koky)の Vue.js の課題です。
 
-# **Project 概要/遊び方**
+## **Project 概要/遊び方**
 
 簡単な車の EC サイトです。
 車のメーカーごとに並べたり、価格順にソートできます。
