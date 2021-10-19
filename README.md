@@ -9,4 +9,4 @@
 
 [Go Play](https://pkoky.github.io/Recursion.Vuejs.CarEcommerce.SecondChallenge/)
 
-(https://user-images.githubusercontent.com/78239360/137849690-df01cfb3-e203-463e-8b76-b2f2973ad2b7.png)
+![](https://user-images.githubusercontent.com/78239360/137849690-df01cfb3-e203-463e-8b76-b2f2973ad2b7.png)
