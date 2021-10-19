@@ -161,17 +161,21 @@ class CarDB {
 }
 
 
+
 class Controller {
+
     static arr = [];
 
     static pushCarObject(obj) {
         Controller.arr.push(obj);
     }
 
+
     static createCarObject(currCarData) {
         let obj = new Car(currCarData.carModel, currCarData.category, currCarData.price, currCarData.imgURL, currCarData.date);
         return obj;
     }
+
 
     static getAllCategories() {
         let carObjects = Controller.arr;
@@ -180,14 +184,24 @@ class Controller {
         return Array.from(mySet);
     }
 
-    static setCarObjectsOfSelectedCategory(category) {
-        
+
+    static getTargetCarObjectBySelectedCategory(category) {
+        let carObjectsArr = Controller.arr;
+
+        if (Controller.getAllCategories().includes(category)) {
+            carObjectsArr = carObjectsArr.filter(carObject => carObject.category === category);
+        }
+        return carObjectsArr;
     }
 
 }
 
+
+
 // CarDBを元にCarObjectを生成しarrに追加する
 CarDB.table.forEach(carData => Controller.pushCarObject(Controller.createCarObject(carData)));
+
+
 
 var carApp = new Vue({
     el: '#carApp',
@@ -195,6 +209,7 @@ var carApp = new Vue({
         carObjects: Controller.arr,
         category: "All Categories",
     },
+
 
     computed: {
 
@@ -204,16 +219,18 @@ var carApp = new Vue({
 
     },
 
+
     methods: {
         regenerationCarItems() {
-           this.setCarObjectsOfSelectedCategory(this.category);
+           this.setCarObjectsBySelectedCategory();
         },
 
-        setCarObjectsOfSelectedCategory(category) {
-            Controller.setCarObjectsOfSelectedCategory(category);
+        setCarObjectsBySelectedCategory() {
+            this.carObjects = Controller.getTargetCarObjectBySelectedCategory(this.category);
         }
     }
 })
+
 
 
 // let arr = Controller.arr;
