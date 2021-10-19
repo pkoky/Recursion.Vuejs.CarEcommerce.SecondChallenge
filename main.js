@@ -201,7 +201,22 @@ class Controller {
 // CarDBを元にCarObjectを生成しarrに追加する
 CarDB.table.forEach(carData => Controller.pushCarObject(Controller.createCarObject(carData)));
 
+Vue.component('item-card', {
+    props: ['carobject'],
+    template: `
+        <div class="card m-2" style="width: 18rem;">
+            <div class="card-body">
+                <img v-bind:src="carobject.imgUrl" class="card-img-top" alt="...">
+                <h5 class="card-title pt-2">{{ carobject.carModel }}</h5>
+                <p class="card-text">Category: {{ carobject.category }}</p>
+                <p class="card-text">Price: \${{ carobject.price }}</p>
+                <p class="card-text">Date: {{ carobject.getRegistrationDate() }}</p>
+            </div>
+        </div>
+`
 
+
+})
 
 var carApp = new Vue({
     el: '#carApp',
@@ -229,6 +244,7 @@ var carApp = new Vue({
             this.carObjects = Controller.getTargetCarObjectBySelectedCategory(this.category);
         }
     }
+
 })
 
 
