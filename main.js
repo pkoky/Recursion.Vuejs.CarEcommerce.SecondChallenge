@@ -163,7 +163,6 @@ class CarDB {
 
 
 class Controller {
-
     static arr = [];
 
     static pushCarObject(obj) {
@@ -186,24 +185,41 @@ class Controller {
 
 
     static getTargetCarObjectBySelectedCategory(category) {
-        let carObjectsArr = Controller.arr;
-
         if (Controller.getAllCategories().includes(category)) {
-            carObjectsArr = carObjectsArr.filter(carObject => carObject.category === category);
+            return Controller.arr.filter(carObject => carObject.category === category);
         }
-        return carObjectsArr;
+        // concatメソッドでarrをコピー
+        return Controller.arr.concat();
+    }
+
+    
+    static sort(arr, order) {
+        arr.sort(function(a,b) {
+            if (order === 'PriceLowToHigh') {
+                return a.price - b.price;
+            }
+            else if (order === 'PriceHighToLow') {
+                return b.price - a.price;
+            }
+            else if (order === 'NewestArrivals') {
+                return b.registrationDate - a.registrationDate;
+            }
+            else return;
+        })
+        return arr;
     }
 
 }
 
 
-
 // CarDBを元にCarObjectを生成しarrに追加する
 CarDB.table.forEach(carData => Controller.pushCarObject(Controller.createCarObject(carData)));
 
+
 Vue.component('item-card', {
     props: ['carobject'],
-    template: `
+    template:
+    `
         <div class="card m-2" style="width: 18rem;">
             <div class="card-body">
                 <img v-bind:src="carobject.imgUrl" class="card-img-top" alt="...">
@@ -213,38 +229,42 @@ Vue.component('item-card', {
                 <p class="card-text">Date: {{ carobject.getRegistrationDate() }}</p>
             </div>
         </div>
-`
-
-
+    `
 })
+
 
 var carApp = new Vue({
     el: '#carApp',
     data: {
         carObjects: Controller.arr,
         category: "All Categories",
+        orderBy: "Sort by:"
     },
 
-
     computed: {
-
         getAllCategories() {
             return Controller.getAllCategories();
         }
-
     },
-
 
     methods: {
         regenerationCarItems() {
-           this.setCarObjectsBySelectedCategory();
+           this.setCategory();
+           this.sort();
         },
 
-        setCarObjectsBySelectedCategory() {
+        setCategory() {
             this.carObjects = Controller.getTargetCarObjectBySelectedCategory(this.category);
+        },
+
+        sort() {
+            if (this.orderBy === '1') this.carObjects = Controller.sort(this.carObjects, 'PriceLowToHigh');
+            if (this.orderBy === '2') this.carObjects = Controller.sort(this.carObjects, 'PriceHighToLow');
+            if (this.orderBy === '3') this.carObjects = Controller.sort(this.carObjects, 'NewestArrivals');
+            
+            console.log(this.carObjects)
         }
     }
-
 })
 
 
