@@ -7,6 +7,7 @@ class Car {
         this.registrationDate = registrationDate;
     }
 
+    // 登録日を表示するフォーマットに整えて返す
     getRegistrationDate() {
         let date = this.registrationDate;
         return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
@@ -165,17 +166,18 @@ class CarDB {
 class Controller {
     static arr = [];
 
+    // 受け取ったオブジェクトを配列に追加する
     static pushCarObject(obj) {
         Controller.arr.push(obj);
     }
 
-
+    // データを元に作成したオブジェクトを返す
     static createCarObject(currCarData) {
         let obj = new Car(currCarData.carModel, currCarData.category, currCarData.price, currCarData.imgURL, currCarData.date);
         return obj;
     }
 
-
+    // setメソッドで一意のカテゴリーを保存し、配列にして返す
     static getAllCategories() {
         let carObjects = Controller.arr;
 
@@ -183,7 +185,7 @@ class Controller {
         return Array.from(mySet);
     }
 
-
+    // 選択されたカテゴリーを持つオブジェクトの配列を返す
     static getTargetCarObjectBySelectedCategory(category) {
         if (Controller.getAllCategories().includes(category)) {
             return Controller.arr.filter(carObject => carObject.category === category);
@@ -192,7 +194,7 @@ class Controller {
         return Controller.arr.concat();
     }
 
-    
+    // orderに沿ってソートした配列を返す
     static sort(arr, order) {
         arr.sort(function(a,b) {
             if (order === 'PriceLowToHigh') {
@@ -208,7 +210,6 @@ class Controller {
         })
         return arr;
     }
-
 }
 
 
@@ -261,13 +262,7 @@ var carApp = new Vue({
             if (this.orderBy === '1') this.carObjects = Controller.sort(this.carObjects, 'PriceLowToHigh');
             if (this.orderBy === '2') this.carObjects = Controller.sort(this.carObjects, 'PriceHighToLow');
             if (this.orderBy === '3') this.carObjects = Controller.sort(this.carObjects, 'NewestArrivals');
-            
-            console.log(this.carObjects)
         }
     }
 })
 
-
-
-// let arr = Controller.arr;
-// console.log(Controller.getAllCategory(arr));
